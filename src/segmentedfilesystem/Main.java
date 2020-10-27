@@ -1,9 +1,9 @@
 package segmentedfilesystem;
+import java.io.IOException;
 
 import java.io.IOException;
 
 public class Main {
-    
     // If there's one command line argument, it is assumed to
     // be the server. If there are two, the second is assumed
     // to be the port to use.
@@ -21,5 +21,4 @@ public class Main {
         FileRetriever fileRetriever = new FileRetriever(server, port);
         fileRetriever.downloadFiles();
     }
-
 }
