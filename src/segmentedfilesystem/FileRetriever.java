@@ -1,26 +1,27 @@
 package segmentedfilesystem;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class FileRetriever {
-
 	InetAddress server;
 	int port;
 
 	public FileRetriever(String server, int port) throws java.net.UnknownHostException {
         // Save the server and port for use in `downloadFiles()`
-        //...
-		if (server.equals("localhost")){
-			this.server = InetAddress.getLocalHost();
-		} else {
-			this.server = InetAddress.getByName(server);
+		try {
+			if (server.equals("localhost")) {
+				this.server = InetAddress.getLocalHost();
+			} else {
+				this.server = InetAddress.getByName(server);
+			}
+			this.port = port;
+		} catch (UnknownHostException uhe) {
+			System.out.println("UnknownHostException in FileRetriever.");
+			System.out.println(uhe);
 		}
-		this.port = port;
 	}
 
 	public void downloadFiles() throws java.io.IOException{
@@ -37,14 +38,28 @@ public class FileRetriever {
         // call for that, but there are a bunch of possible
         // ways.
 
-		// Send an empty packet to the server.
-		byte[] sendBuf = new byte[256];
-		DatagramPacket packet = new DatagramPacket(sendBuf, sendBuf.length, server, port);
-		DatagramSocket socket = new DatagramSocket(port, server);
-		socket.send(packet);
+		try {
+			// Send an empty packet to the server.
+			byte[] packetBuf = new byte[1028];
+			boolean notDone = true;
+			DatagramSocket socket = new DatagramSocket();
+			DatagramPacket packet = new DatagramPacket(packetBuf, packetBuf.length, server, port);
+			socket.send(packet);
 
+			//Wait for incoming packets to arrive and send them to PacketManager
+			//Will terminate once all packets have been received
+			while (notDone) {
+				packet = new DatagramPacket(packetBuf, packetBuf.length);
+				socket.receive(packet);
 
+				//PacketManager handles the new 'packet' object
+				if (PacketManager.allPacketsReceived())
+					notDone = false;
+			}
+		} catch (IOException ioe) {
+			System.out.println("IOException in FileRetriever.");
+			System.out.println(ioe);
+		}
 	}
-
 }
 

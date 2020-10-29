@@ -1,8 +1,6 @@
 package segmentedfilesystem;
 import java.io.IOException;
 
-import java.io.IOException;
-
 public class Main {
     // If there's one command line argument, it is assumed to
     // be the server. If there are two, the second is assumed
@@ -18,7 +16,12 @@ public class Main {
             port = Integer.parseInt(args[1]);
         }
 
-        FileRetriever fileRetriever = new FileRetriever(server, port);
-        fileRetriever.downloadFiles();
+        try {
+            FileRetriever fileRetriever = new FileRetriever(server, port);
+            fileRetriever.downloadFiles();
+        } catch (IOException ioe) {
+            System.out.println("IOException in Main.");
+            System.out.println(ioe);
+        }
     }
 }
