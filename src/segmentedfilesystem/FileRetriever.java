@@ -52,7 +52,7 @@ public class FileRetriever {
 				packet = new DatagramPacket(packetBuf, packetBuf.length);
 				socket.receive(packet);
 
-				//PacketManager handles the new 'packet' object
+				//PacketManager handles the 'packet' object
 				if (PacketManager.allPacketsReceived())
 					notDone = false;
 			}
