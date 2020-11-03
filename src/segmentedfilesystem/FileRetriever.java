@@ -52,9 +52,12 @@ public class FileRetriever {
 				packet = new DatagramPacket(packetBuf, packetBuf.length);
 				socket.receive(packet);
 
-				//PacketManager handles the 'packet' object
-				if (PacketManager.allPacketsReceived())
+				//PacketManager.sortPacket(); Not static for some reason??
+
+				if (PacketManager.allPacketsReceived()) {
 					notDone = false;
+					socket.close();
+				}
 			}
 		} catch (IOException ioe) {
 			System.out.println("IOException in FileRetriever.");
