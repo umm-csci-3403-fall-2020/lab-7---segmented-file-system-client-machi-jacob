@@ -45,6 +45,7 @@ public class FileRetriever {
 			DatagramSocket socket = new DatagramSocket();
 			DatagramPacket packet = new DatagramPacket(packetBuf, packetBuf.length, server, port);
 			socket.send(packet);
+			PacketManager packetManager = new PacketManager();
 
 			//Wait for incoming packets to arrive and send them to PacketManager
 			//Will terminate once all packets have been received
@@ -52,7 +53,7 @@ public class FileRetriever {
 				packet = new DatagramPacket(packetBuf, packetBuf.length);
 				socket.receive(packet);
 
-				//PacketManager.sortPacket(); Not static for some reason??
+				packetManager.sortPacket(packet);
 
 				if (PacketManager.allPacketsReceived()) {
 					notDone = false;

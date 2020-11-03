@@ -19,6 +19,7 @@ public class Packet {
     }
 
     //Gets the file ID of the packet
+    //Change to int
     public byte getFileID(){
         byte fileID = data[1];//Second byte
         return fileID;
@@ -31,7 +32,7 @@ public class Packet {
         byte second = data[3];//Fourth byte
         int firstInt = Byte.toUnsignedInt(first);
         int secondInt = Byte.toUnsignedInt(second);
-        int packetNum = firstInt + secondInt;//I assume that we add these together
+        int packetNum = firstInt*256 + secondInt;
         return packetNum;
     }
 

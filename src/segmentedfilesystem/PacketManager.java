@@ -11,14 +11,9 @@ public class PacketManager {
     Packet packet;
     boolean header;
     boolean lastPacket;
-    byte[] fileIDs = {-1,-1,-1}; //Might just initialize at byte[3] idk
-    public PacketManager(DatagramPacket inputPacket){
-        byte[] data = inputPacket.getData();
-        int length = inputPacket.getLength();
-        Packet packet = new Packet(data,length);
-        this.packet = packet;
-        this.header = packet.isHeader();
-        this.lastPacket = packet.isLastPacket();
+    byte[] fileIDs = {-1,-1,-1}; //Change to ints
+    public PacketManager(){
+
     }
 
     //Only for normal data packets
@@ -33,10 +28,10 @@ public class PacketManager {
         }
     }
 
-    public void sortPacket(){
-        Packet packet = this.packet;
-        boolean header = this.header;
-        boolean lastPacket = this.lastPacket;
+    public void sortPacket(DatagramPacket inputPacket){
+        byte[] data = inputPacket.getData();
+        int length = inputPacket.getLength();
+        Packet packet = new Packet(data,length);
 
         if (header){
             //do header stuff
