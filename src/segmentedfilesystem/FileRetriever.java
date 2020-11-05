@@ -53,11 +53,13 @@ public class FileRetriever {
 				packet = new DatagramPacket(packetBuf, packetBuf.length);
 				socket.receive(packet);
 
+				//Send the packet to PacketManager to sort it
 				packetManager.sortPacket(packet);
 
 				if (PacketManager.allPacketsReceived()) {
 					notDone = false;
 					socket.close();
+					System.out.println("Download complete.");
 				}
 			}
 		} catch (IOException ioe) {

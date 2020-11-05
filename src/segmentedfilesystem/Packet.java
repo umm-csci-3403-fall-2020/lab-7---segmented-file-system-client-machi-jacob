@@ -13,15 +13,16 @@ public class Packet {
     }
 
     //Gets the status byte of the packet
-    public byte getStatusByte(){
-        byte status = data[0];//First byte
+    public int getStatusByte(){
+        byte statusByte = data[0];//First byte
+        int status = Byte.toUnsignedInt(statusByte);
         return status;
     }
 
     //Gets the file ID of the packet
-    //Change to int
-    public byte getFileID(){
-        byte fileID = data[1];//Second byte
+    public int getFileID(){
+        byte fileIDByte = data[1];//Second byte
+        int fileID = Byte.toUnsignedInt(fileIDByte);
         return fileID;
     }
 
@@ -60,12 +61,13 @@ public class Packet {
     }
 
     //Gets the file name from the header packet
-    public byte[] getFileName(){
+    public String getFileName(){
         if (header){ //Will not work if it isn't a header packet
             byte[] fileName = new byte[length-2];
             for (int i = 2; i<length;i++)
                 fileName[i-2] = data[i];
-            return fileName;
+            String name = new String(fileName);
+            return name;
         } else
             return null;
     }
