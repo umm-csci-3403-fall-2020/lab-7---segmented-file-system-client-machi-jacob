@@ -72,8 +72,11 @@ public class ReceivedFile {
         }
     }
 
+    //Checks if all of the packets in the file have been received
     public boolean allPacketsReceived(){
-        //Checks if all of the packets in the file have been received
-        return false;
+        if (tree.size() == lastPacketNum+1){
+            return true;
+        } else
+            return false;
     }
 }

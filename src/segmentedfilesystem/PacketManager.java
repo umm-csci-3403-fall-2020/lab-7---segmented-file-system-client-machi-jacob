@@ -8,9 +8,9 @@ public class PacketManager {
 
     int[] fileIDs = {-1,-1,-1};
     int fileIDLocation = 0;
-    ReceivedFile file1;
-    ReceivedFile file2;
-    ReceivedFile file3;
+    static ReceivedFile file1;
+    static ReceivedFile file2;
+    static ReceivedFile file3;
 
     //This takes a packet and assigns it to the correct file
     //based on the packet's fileID
@@ -55,10 +55,13 @@ public class PacketManager {
         checkFileIDs(packet);
     }
 
-
     public static boolean allPacketsReceived(){
         //if file1 & file2 & file3 are all done,
         //then return true. otherwise return false
-        return false;
+        if (file1.allPacketsReceived() && file2.allPacketsReceived() && file3.allPacketsReceived()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
