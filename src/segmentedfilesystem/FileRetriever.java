@@ -12,11 +12,7 @@ public class FileRetriever {
 	public FileRetriever(String server, int port) throws java.net.UnknownHostException {
         // Save the server and port for use in `downloadFiles()`
 		try {
-			if (server.equals("localhost")) {
-				this.server = InetAddress.getLocalHost();
-			} else {
-				this.server = InetAddress.getByName(server);
-			}
+			this.server = InetAddress.getByName(server);
 			this.port = port;
 		} catch (UnknownHostException uhe) {
 			System.out.println("UnknownHostException in FileRetriever.");

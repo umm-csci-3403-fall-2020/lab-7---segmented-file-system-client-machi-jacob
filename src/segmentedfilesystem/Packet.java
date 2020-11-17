@@ -53,11 +53,7 @@ public class Packet {
     //Checks if the packet is the last packet for the file
     public boolean isLastPacket(){
         int statusByte = Byte.toUnsignedInt(data[0]);
-        if (statusByte  == 3%4 ){
-            return true;
-        } else {
-            return false;
-        }
+        return (statusByte % 4  == 3 );
     }
 
     //Gets the file name from the header packet

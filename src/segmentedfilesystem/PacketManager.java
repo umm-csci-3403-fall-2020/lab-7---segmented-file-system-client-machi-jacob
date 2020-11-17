@@ -1,6 +1,7 @@
 package segmentedfilesystem;
 import java.net.DatagramPacket;
 
+
 /* Decides whether a packet is a header or a data packet,
 constructs the packet, and adds it to the correct ReceivedFile object.
 */
@@ -8,9 +9,9 @@ public class PacketManager {
 
     int[] fileIDs = {-1,-1,-1};
     int fileIDLocation = 0;
-    static ReceivedFile file1;
-    static ReceivedFile file2;
-    static ReceivedFile file3;
+    static ReceivedFile file1 = new ReceivedFile();
+    static ReceivedFile file2 = new ReceivedFile();
+    static ReceivedFile file3 = new ReceivedFile();
 
     //This takes a packet and assigns it to the correct file
     //based on the packet's fileID
@@ -34,6 +35,10 @@ public class PacketManager {
 
     //Checks to see if an initialized ReceivedFile file has been used
     public void checkFiles(Packet packet){
+        if (file1 == null){
+            file1 = new ReceivedFile();
+            System.out.println("Initialized File1.");
+        }
         if(fileIDs[0] == -1){
             file1.newFile(packet);
         } else if (fileIDs[1] == -1){

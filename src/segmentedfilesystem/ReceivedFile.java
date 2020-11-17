@@ -9,7 +9,7 @@ public class ReceivedFile {
 
     TreeMap<Integer, byte[]> tree;
     String fileName;
-    int lastPacketNum;
+    int lastPacketNum = -2;
     byte[] finalByteArray;
 
     //Creates a new 'file' that's actually a TreeMap
@@ -51,7 +51,7 @@ public class ReceivedFile {
     public void writeToByteArray(){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            for (int i = 0; i < lastPacketNum; i++) {
+            for (int i = 0; i <= lastPacketNum; i++) {
                 outputStream.write(tree.get(i));
             }
             finalByteArray = outputStream.toByteArray();
@@ -74,9 +74,6 @@ public class ReceivedFile {
 
     //Checks if all of the packets in the file have been received
     public boolean allPacketsReceived(){
-        if (tree.size() == lastPacketNum+1){
-            return true;
-        } else
-            return false;
+        return tree.size() == lastPacketNum+1 && fileName != null;
     }
 }
